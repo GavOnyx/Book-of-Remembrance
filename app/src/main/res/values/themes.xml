@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base theme; in-app colors are driven by the ThemeSettings table
+         (customizable palette), this only covers the system chrome. -->
+    <style name="Theme.CalOnyx" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+</resources>
