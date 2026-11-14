@@ -603,14 +603,17 @@ fun IcsImportConfirmDialog(
                 if (preview.total == 0) "No events found in this file."
                 else "Found ${preview.total} event(s). " +
                     if (preview.alreadyImported > 0)
-                        "${preview.alreadyImported} already imported — will be skipped."
+                        if (preview.alreadyImported == preview.total)
+                            "All already imported — importing again restores any missing contact links."
+                        else
+                            "${preview.alreadyImported} already imported — will be skipped, but their contact links will be restored."
                     else "None already imported."
             )
         },
         confirmButton = {
             TextButton(
                 onClick = onConfirm,
-                enabled = preview.total > preview.alreadyImported
+                enabled = preview.total > 0
             ) { Text("Import") }
         },
         dismissButton = {

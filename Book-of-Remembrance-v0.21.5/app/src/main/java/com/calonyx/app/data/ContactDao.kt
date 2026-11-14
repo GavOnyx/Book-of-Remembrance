@@ -34,6 +34,14 @@ interface ContactDao {
     @Query("SELECT * FROM contacts WHERE LOWER(email) = LOWER(:email) LIMIT 1")
     suspend fun getByEmail(email: String): Contact?
 
+    /**
+     * Exact display-name matches (case-insensitive) — name fallback for
+     * re-linking imported attendees when no stable UID or email matches.
+     * Only used when exactly one contact matches.
+     */
+    @Query("SELECT * FROM contacts WHERE LOWER(displayName) = LOWER(:name)")
+    suspend fun getByDisplayName(name: String): List<Contact>
+
     /** Full contact list for export filtering (one-shot). */
     @Query("SELECT * FROM contacts ORDER BY displayName COLLATE NOCASE ASC")
     suspend fun getAll(): List<Contact>

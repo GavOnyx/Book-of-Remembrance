@@ -925,6 +925,8 @@ fun SettingsScreen(
                         append("Imported ${summary.eventsImported} event(s)")
                         if (summary.eventsSkipped > 0)
                             append(", skipped ${summary.eventsSkipped} already imported")
+                        if (summary.linksRestored > 0)
+                            append(", restored ${summary.linksRestored} contact link(s)")
                         if (summary.contactsAutoCreated > 0)
                             append(" (${summary.contactsAutoCreated} contact(s) created)")
                     }

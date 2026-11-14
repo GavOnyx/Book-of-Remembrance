@@ -178,7 +178,9 @@ class ImportExportManager(private val repository: CalOnyxRepository) {
         val contactsFound: Int = 0,
         val contactsImported: Int = 0,
         val contactsSkipped: Int = 0,
-        val contactsAutoCreated: Int = 0
+        val contactsAutoCreated: Int = 0,
+        /** Contact links restored onto events that already existed (v0.21.5 repair). */
+        val linksRestored: Int = 0
     )
 
     suspend fun previewIcsImport(text: String): IcsImportPreview {
@@ -206,6 +208,9 @@ class ImportExportManager(private val repository: CalOnyxRepository) {
      * events whose UID already exists are skipped. A VEVENT carrying an
      * RRULE becomes a real recurring series (rule + seriesId stored,
      * instances generated) instead of plain unlinked instances.
+     * Skipped events still get their attendees re-linked (v0.21.5): a
+     * re-import of a file exported before the v0.21.4 contact-export
+     * link wipe restores the missing links.
      */
     suspend fun importIcs(text: String, autoCreateContacts: Boolean): ImportSummary {
         val parsed = IcsParser.parse(text)
@@ -214,6 +219,7 @@ class ImportExportManager(private val repository: CalOnyxRepository) {
         var imported = 0
         var skipped = 0
         var autoCreated = 0
+        var linksRestored = 0
 
         // Group expanded RRULE instances back into their series. The
         // "#n" suffix is ours (digits only), so a foreign UID that merely
@@ -234,11 +240,18 @@ class ImportExportManager(private val repository: CalOnyxRepository) {
             imported += r.imported
             skipped += r.skipped
             autoCreated += r.autoCreated
+            linksRestored += r.relinked
         }
         for ((baseUid, instances) in seriesGroups) {
             // The VEVENT's own UID doubles as the series id, so a second
-            // import of the same file is a no-op for the whole series.
+            // import of the same file is a no-op for the whole series —
+            // except its attendees are still re-linked (v0.21.5 repair).
             if (repository.countSeriesEvents(baseUid) > 0) {
+                for (p in instances) {
+                    repository.getEventByIcalUid(p.uid)?.let {
+                        linksRestored += relinkExistingEvent(it.id, p)
+                    }
+                }
                 skipped += instances.size
                 continue
             }
@@ -248,21 +261,83 @@ class ImportExportManager(private val repository: CalOnyxRepository) {
                 imported += r.imported
                 skipped += r.skipped
                 autoCreated += r.autoCreated
+                linksRestored += r.relinked
             }
         }
         return ImportSummary(
             eventsFound = parsed.size,
             eventsImported = imported,
             eventsSkipped = skipped,
-            contactsAutoCreated = autoCreated
+            contactsAutoCreated = autoCreated,
+            linksRestored = linksRestored
         )
     }
 
     private data class OneImportResult(
         val imported: Int,
         val skipped: Int,
-        val autoCreated: Int
+        val autoCreated: Int,
+        val relinked: Int = 0
     )
+
+    private data class ResolvedAttendees(
+        val contactIds: Set<Long>,
+        val unmatched: List<ParsedAttendee>
+    )
+
+    /**
+     * Resolves a parsed event's attendees to existing contact ids, in
+     * priority order: stable vCard UID, then email, then an unambiguous
+     * display-name match (exactly one contact with that name — a shared
+     * name never links). Attendees that match nothing are returned as
+     * [ResolvedAttendees.unmatched] for the auto-create step.
+     */
+    private suspend fun resolveAttendees(p: ParsedEvent): ResolvedAttendees {
+        val contactIds = mutableSetOf<Long>()
+        for (cuid in p.contactUids) {
+            repository.getContactByVcardUid(cuid)?.let { contactIds.add(it.id) }
+        }
+        val unmatched = mutableListOf<ParsedAttendee>()
+        for (a in p.attendees) {
+            val byEmail = a.email?.let { repository.getContactByEmail(it) }
+            if (byEmail != null) {
+                contactIds.add(byEmail.id)
+                continue
+            }
+            val name = a.name?.trim().takeUnless { it.isNullOrBlank() }
+            val byName = name?.let { repository.getContactsByDisplayName(it) }.orEmpty()
+            if (byName.size == 1) {
+                contactIds.add(byName[0].id)
+                continue
+            }
+            unmatched.add(a)
+        }
+        return ResolvedAttendees(contactIds, unmatched)
+    }
+
+    /**
+     * v0.21.5 repair: re-attaches a parsed event's attendees to an event
+     * that already exists in the DB. The v0.21.4 contact export wiped
+     * event links via a REPLACE upsert; the pre-export .ics still holds
+     * every link, so a re-import restores them. Returns how many links
+     * were actually restored (links already present are not counted).
+     * Never creates contacts — only re-attaches to contacts already
+     * in the list.
+     */
+    private suspend fun relinkExistingEvent(eventId: Long, p: ParsedEvent): Int {
+        val contactIds = resolveAttendees(p).contactIds
+        if (contactIds.isEmpty()) return 0
+        val alreadyLinked = repository.getContactRefsForEvents(listOf(eventId))
+            .map { it.contactId }.toSet()
+        var restored = 0
+        for (cid in contactIds) {
+            if (cid !in alreadyLinked) {
+                repository.linkContactToEvent(eventId, cid)
+                restored++
+            }
+        }
+        return restored
+    }
 
     /**
      * Imports one parsed event (one instance of a series when [seriesId]
@@ -277,8 +352,14 @@ class ImportExportManager(private val repository: CalOnyxRepository) {
         now: Long
     ): OneImportResult {
         val uid = p.uid.ifBlank { UUID.randomUUID().toString() }
-        if (repository.getEventByIcalUid(uid) != null) {
-            return OneImportResult(0, 1, 0)
+        val existingEvent = repository.getEventByIcalUid(uid)
+        if (existingEvent != null) {
+            // v0.21.5: a re-import used to skip existing events outright,
+            // so the links wiped by the v0.21.4 contact export could not
+            // be repaired from the pre-export .ics. Re-link the file's
+            // attendees to the existing event instead.
+            val relinked = relinkExistingEvent(existingEvent.id, p)
+            return OneImportResult(0, 1, 0, relinked)
         }
         val typeId = p.xType?.trim()?.takeIf { it.isNotEmpty() }?.let { name ->
             typeCache.getOrPut(name.lowercase()) {
@@ -302,18 +383,12 @@ class ImportExportManager(private val repository: CalOnyxRepository) {
                 seriesId = seriesId
             )
         )
-        val contactIds = mutableSetOf<Long>()
+        val resolved = resolveAttendees(p)
+        val contactIds = resolved.contactIds.toMutableSet()
         var autoCreated = 0
-        for (cuid in p.contactUids) {
-            repository.getContactByVcardUid(cuid)?.let { contactIds.add(it.id) }
-        }
-        for (a in p.attendees) {
-            val existing = a.email?.let { repository.getContactByEmail(it) }
-            if (existing != null) {
-                contactIds.add(existing.id)
-            } else if (autoCreateContacts &&
-                (!a.name.isNullOrBlank() || !a.email.isNullOrBlank())
-            ) {
+        if (autoCreateContacts) {
+            for (a in resolved.unmatched) {
+                if (a.name.isNullOrBlank() && a.email.isNullOrBlank()) continue
                 val name = a.name?.trim().takeUnless { it.isNullOrBlank() }
                 val display = name ?: a.email!!.trim()
                 // Same fallback as the vCard parser: an attendee CN is only

@@ -358,6 +358,10 @@ class CalOnyxRepository(private val db: CalOnyxDatabase) {
     suspend fun getContactByEmail(email: String): Contact? =
         db.contactDao().getByEmail(email)
 
+    /** Exact display-name matches — name fallback for linking imported attendees. */
+    suspend fun getContactsByDisplayName(name: String): List<Contact> =
+        db.contactDao().getByDisplayName(name)
+
     suspend fun getContactByDeviceId(deviceId: Long): Contact? =
         db.contactDao().getByDeviceId(deviceId)
 

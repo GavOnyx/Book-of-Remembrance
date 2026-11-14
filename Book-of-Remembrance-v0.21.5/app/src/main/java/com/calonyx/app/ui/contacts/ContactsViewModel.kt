@@ -395,15 +395,20 @@ class ContactsViewModel(private val repository: CalOnyxRepository) : ViewModel()
                             (appPhone.isNullOrBlank() ||
                                 device.phones.any { it.normalizePhone() == appPhone })
                     }
+                    // v0.21.5: this is an EXISTING contact, so it MUST use
+                    // the non-destructive @Update path. saveContact (upsert
+                    // = REPLACE) deletes + re-inserts the row, which fires
+                    // the CASCADE on event_contact_cross_ref and wipes the
+                    // contact's event links — the v0.21.4 export bug.
                     if (match != null) {
-                        repository.saveContact(
+                        repository.updateContact(
                             contact.copy(deviceContactId = match.id, lastSyncedAt = now)
                         )
                         skipped++
                     } else {
                         val deviceId = insertDeviceContact(resolver, contact)
                         if (deviceId != null) {
-                            repository.saveContact(
+                            repository.updateContact(
                                 contact.copy(deviceContactId = deviceId, lastSyncedAt = now)
                             )
                             deviceContacts += DeviceContact(
