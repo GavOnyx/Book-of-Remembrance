@@ -1,3 +1,5 @@
+// Database access for event types, relationship tags, sync partners, and deletion tombstones.
+
 package com.calonyx.app.data
 
 import androidx.room.Dao
@@ -100,9 +102,6 @@ interface PartnerDao {
 
     @Query("SELECT * FROM partners ORDER BY displayName COLLATE NOCASE ASC")
     fun observeAll(): Flow<List<Partner>>
-
-    @Query("SELECT * FROM partners ORDER BY displayName COLLATE NOCASE ASC")
-    suspend fun getAll(): List<Partner>
 
     @Query("SELECT COUNT(*) FROM partners")
     suspend fun count(): Int

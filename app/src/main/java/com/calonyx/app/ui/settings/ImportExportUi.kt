@@ -1,3 +1,5 @@
+// The import and export dialogs: filters, format choices, and the auto-create toggle.
+
 package com.calonyx.app.ui.settings
 
 import androidx.compose.foundation.background

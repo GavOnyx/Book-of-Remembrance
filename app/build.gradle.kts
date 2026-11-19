@@ -16,8 +16,8 @@ android {
         applicationId = "com.calonyx.app"
         minSdk = 26
         targetSdk = 34
-        versionCode = 53
-        versionName = "0.21.7"
+        versionCode = 54
+        versionName = "1.0.0"
     }
 
     buildTypes {
@@ -54,8 +54,14 @@ android {
 
 // This build host cannot run Gradle worker daemons (localhost socket filter),
 // so Java compilation uses a forked javac process instead of a worker.
+// The fork needs an explicit javac: without one, the compile falls back
+// to a worker daemon and fails on this host ("Never received a connection
+// from Gradle Worker Daemon"). The path is only pinned when it exists, so
+// the project still builds anywhere else, using the JDK on PATH there.
 tasks.withType<JavaCompile>().configureEach {
     options.isFork = true
+    val hostJavac = File("/home/hatch/jdk/jdk-17.0.13+11/bin/javac")
+    if (hostJavac.exists()) options.forkOptions.executable = hostJavac.absolutePath
 }
 
 dependencies {

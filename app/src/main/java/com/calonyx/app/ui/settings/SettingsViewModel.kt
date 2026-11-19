@@ -1,3 +1,5 @@
+// Settings state: the theme being edited, the settings row, and the import/export and sync operations.
+
 package com.calonyx.app.ui.settings
 
 import androidx.lifecycle.ViewModel

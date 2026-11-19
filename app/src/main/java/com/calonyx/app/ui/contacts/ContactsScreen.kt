@@ -1,3 +1,5 @@
+// The contacts list: sorting, the phone sync dialog, and multi-select for merge and bulk edit.
+
 package com.calonyx.app.ui.contacts
 import androidx.compose.foundation.text.KeyboardOptions
 

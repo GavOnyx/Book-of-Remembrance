@@ -1,3 +1,5 @@
+// Builds the human-readable journal export, as plain text or HTML, from events with a written report.
+
 package com.calonyx.app.data.importexport
 
 import java.time.LocalDate

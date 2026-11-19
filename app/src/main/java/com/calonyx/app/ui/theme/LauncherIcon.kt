@@ -1,3 +1,5 @@
+// The launcher-icon variants (Light / Dark / Original) and the logic that picks one for the current theme.
+
 package com.calonyx.app.ui.theme
 
 import android.content.ComponentName

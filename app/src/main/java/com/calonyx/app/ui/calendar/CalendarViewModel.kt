@@ -1,3 +1,5 @@
+// Calendar and journal state: the selected day, search, multi-select, zoom, and delete-with-undo.
+
 package com.calonyx.app.ui.calendar
 
 import androidx.compose.ui.graphics.Color
@@ -206,11 +208,6 @@ class CalendarViewModel(private val repository: CalOnyxRepository) : ViewModel()
 
     /** Most recently deleted events awaiting a possible Undo; null when none. */
     val pendingUndo = MutableStateFlow<DeletedEvents?>(null)
-
-    /** Single-event delete with undo (used by the event editor). */
-    fun deleteEventWithUndo(event: Event) {
-        deleteEventWithScope(event, deleteFuture = false)
-    }
 
     /**
      * Deletes an event with undo. When [deleteFuture] is true and the

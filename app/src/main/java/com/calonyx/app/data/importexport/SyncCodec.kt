@@ -1,3 +1,5 @@
+// Serializes sync deltas — the changed rows and tombstones one device sends to another.
+
 package com.calonyx.app.data.importexport
 
 import com.calonyx.app.data.Contact

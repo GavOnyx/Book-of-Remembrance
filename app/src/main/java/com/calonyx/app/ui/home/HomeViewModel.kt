@@ -1,3 +1,5 @@
+// Home state: the month fill percentages, the stats donut data, and the unmarked-events list.
+
 package com.calonyx.app.ui.home
 
 import androidx.compose.ui.graphics.Color

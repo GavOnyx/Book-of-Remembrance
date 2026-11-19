@@ -1,3 +1,5 @@
+// The in-app Help page. The wording is the author's own — do not rewrite it.
+
 package com.calonyx.app.ui.settings
 
 import androidx.compose.foundation.layout.Column

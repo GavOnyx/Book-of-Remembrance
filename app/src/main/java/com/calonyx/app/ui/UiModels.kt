@@ -1,3 +1,5 @@
+// How events look in the UI: status colors and shapes, and the display title fallback chain.
+
 package com.calonyx.app.ui
 
 import androidx.compose.ui.graphics.Color

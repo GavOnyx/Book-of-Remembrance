@@ -1,3 +1,5 @@
+// Small date and time helpers: day headers, hour labels, and durations.
+
 package com.calonyx.app.ui
 
 import java.time.Instant
@@ -70,12 +72,3 @@ fun formatDateTime(millis: Long): String =
 /** e.g. "Tue, Oct 6" for day headers. */
 fun formatDayHeader(date: LocalDate): String =
     date.format(DateTimeFormatter.ofPattern("EEE, MMM d"))
-
-fun greeting(): String {
-    return when (LocalTime.now().hour) {
-        in 5..11 -> "Good morning"
-        in 12..16 -> "Good afternoon"
-        in 17..21 -> "Good evening"
-        else -> "Good night"
-    }
-}

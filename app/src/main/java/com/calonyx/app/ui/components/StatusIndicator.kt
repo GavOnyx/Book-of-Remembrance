@@ -1,3 +1,5 @@
+// The status glyph: a green checkmark, a red X, or a gray circle, drawn on a bare Canvas.
+
 package com.calonyx.app.ui.components
 
 import androidx.compose.foundation.Canvas

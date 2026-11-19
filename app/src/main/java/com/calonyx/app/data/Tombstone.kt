@@ -1,3 +1,5 @@
+// A deletion tombstone: the ID of something deleted, so a later sync deletes it on the partner too.
+
 package com.calonyx.app.data
 
 import androidx.room.Entity

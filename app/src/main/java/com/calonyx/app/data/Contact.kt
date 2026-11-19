@@ -1,3 +1,5 @@
+// A contact: name, phone, email, address, notes, relationship tag, and the IDs linking it to the phone and to sync.
+
 package com.calonyx.app.data
 
 import androidx.room.Entity

@@ -1,3 +1,5 @@
+// Parses .ics calendar files, including Book of Remembrance extensions (contact links, recurrence, statuses).
+
 package com.calonyx.app.data.importexport
 
 import java.time.LocalDate

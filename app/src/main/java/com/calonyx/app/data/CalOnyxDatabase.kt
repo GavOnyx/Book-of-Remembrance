@@ -1,3 +1,5 @@
+// The Room database: entities, DAOs, and the sequential migrations (v1 to the current version).
+
 package com.calonyx.app.data
 
 import android.content.Context

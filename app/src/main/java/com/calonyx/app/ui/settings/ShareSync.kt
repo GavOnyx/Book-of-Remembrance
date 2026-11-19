@@ -1,3 +1,5 @@
+// The sharing transport: plain TCP sockets over local Wi-Fi, with mDNS discovery of nearby devices.
+
 package com.calonyx.app.ui.settings
 
 import kotlinx.coroutines.CancellationException

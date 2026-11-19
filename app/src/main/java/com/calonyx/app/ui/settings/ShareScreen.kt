@@ -1,3 +1,5 @@
+// The share screen: picking what to send to another device, one time.
+
 package com.calonyx.app.ui.settings
 
 import androidx.compose.foundation.clickable

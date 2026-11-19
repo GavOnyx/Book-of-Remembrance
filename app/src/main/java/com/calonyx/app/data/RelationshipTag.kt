@@ -1,3 +1,5 @@
+// A relationship tag (family, friend, co-worker, peer, stranger, or a custom one), in the user's manual ordering.
+
 package com.calonyx.app.data
 
 import androidx.room.Entity

@@ -1,3 +1,5 @@
+// Database access for contacts: the four sort orders, device-ID lookups, and the link table.
+
 package com.calonyx.app.data
 
 import androidx.room.Dao
@@ -77,9 +79,6 @@ interface ContactDao {
            ORDER BY COUNT(r.eventId) DESC"""
     )
     fun observeByInteractionCount(): Flow<List<Contact>>
-
-    @Query("SELECT * FROM contacts WHERE relationshipTagId = :tagId ORDER BY displayName COLLATE NOCASE ASC")
-    fun observeByRelationship(tagId: Long): Flow<List<Contact>>
 
     /**
      * All contacts ordered by the user's manual tag ordering (untagged sort

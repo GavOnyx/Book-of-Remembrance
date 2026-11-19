@@ -1,3 +1,5 @@
+// The main activity: edge-to-edge display, the navigation host, and the app's top-level state.
+
 package com.calonyx.app.ui
 
 import android.os.Bundle

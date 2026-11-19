@@ -1,3 +1,5 @@
+// Writes events and contacts out as .ics / .vcf, with Book of Remembrance details preserved.
+
 package com.calonyx.app.data.importexport
 
 import com.calonyx.app.data.EventStatus

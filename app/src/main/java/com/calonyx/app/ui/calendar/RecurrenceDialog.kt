@@ -1,3 +1,5 @@
+// The Repeat dialog for the event editor: how often, and when the series ends.
+
 package com.calonyx.app.ui.calendar
 
 import androidx.compose.foundation.layout.Arrangement
@@ -5,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
@@ -32,7 +33,6 @@ import com.calonyx.app.data.importexport.RecurEndChoice
 import com.calonyx.app.data.importexport.RecurFreq
 import com.calonyx.app.data.importexport.RecurrenceChoice
 import com.calonyx.app.ui.formatDate
-import com.calonyx.app.ui.toLocalDate
 import com.calonyx.app.ui.toUtcPickerMillis
 import com.calonyx.app.ui.utcPickerMillisToLocalDate
 import java.time.LocalDate

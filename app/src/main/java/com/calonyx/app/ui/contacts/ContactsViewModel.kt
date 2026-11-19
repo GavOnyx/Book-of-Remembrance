@@ -1,3 +1,5 @@
+// Contacts state: the list in the current sort order, device sync, merge, and bulk edit.
+
 package com.calonyx.app.ui.contacts
 
 import android.content.ContentResolver
@@ -70,10 +72,6 @@ class ContactsViewModel(private val repository: CalOnyxRepository) : ViewModel()
     val appSettings: StateFlow<AppSettings> =
         repository.observeAppSettings()
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), AppSettings())
-
-    val allContactsForPicker: StateFlow<List<Contact>> =
-        repository.observeContactsAlphabetical()
-            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val selectedContactId = MutableStateFlow<Long?>(null)
 

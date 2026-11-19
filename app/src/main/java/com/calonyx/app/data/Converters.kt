@@ -1,3 +1,5 @@
+// Room type converters. Room calls these by reflection — do not delete them as unused.
+
 package com.calonyx.app.data
 
 import androidx.room.TypeConverter

@@ -1,3 +1,5 @@
+// Encodes and decodes vCard contacts for .vcf export and import.
+
 package com.calonyx.app.data.importexport
 
 import com.calonyx.app.data.Contact

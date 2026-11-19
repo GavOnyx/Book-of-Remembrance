@@ -1,3 +1,5 @@
+// The journal view: events as cards grouped by day, with details you edit in place.
+
 package com.calonyx.app.ui.calendar
 import androidx.compose.foundation.text.KeyboardOptions
 

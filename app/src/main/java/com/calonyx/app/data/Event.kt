@@ -1,3 +1,5 @@
+// A calendar event. Times are epoch milliseconds; the type is a foreign key that nulls out when the type is deleted.
+
 package com.calonyx.app.data
 
 import androidx.room.Entity

@@ -1,3 +1,5 @@
+// The single place the UI talks to the database: queries, saves, deletes with undo, and import/export helpers.
+
 package com.calonyx.app.data
 
 import androidx.room.withTransaction
@@ -88,15 +90,6 @@ class CalOnyxRepository(private val db: CalOnyxDatabase) {
         val stamped = event.copy(updatedAt = nowMillis())
         stamped.icalUid?.let { db.tombstoneDao().delete(Tombstone.EVENT, it) }
         db.eventDao().update(stamped)
-    }
-
-    suspend fun deleteEvent(event: Event) {
-        db.withTransaction {
-            event.icalUid?.let {
-                db.tombstoneDao().upsert(Tombstone(Tombstone.EVENT, it, nowMillis()))
-            }
-            db.eventDao().delete(event)
-        }
     }
 
     /** How many instances a recurring series currently has. */
@@ -314,9 +307,6 @@ class CalOnyxRepository(private val db: CalOnyxDatabase) {
     fun observeContactsByInteractionCount(): Flow<List<Contact>> =
         db.contactDao().observeByInteractionCount()
 
-    fun observeContactsByRelationship(tagId: Long): Flow<List<Contact>> =
-        db.contactDao().observeByRelationship(tagId)
-
     fun observeContactsSortedByRelationship(): Flow<List<Contact>> =
         db.contactDao().observeSortedByRelationship()
 
@@ -372,15 +362,6 @@ class CalOnyxRepository(private val db: CalOnyxDatabase) {
 
     suspend fun getContactByDeviceId(deviceId: Long): Contact? =
         db.contactDao().getByDeviceId(deviceId)
-
-    suspend fun deleteContact(contact: Contact) {
-        db.withTransaction {
-            contact.vcardUid?.let {
-                db.tombstoneDao().upsert(Tombstone(Tombstone.CONTACT, it, nowMillis()))
-            }
-            db.contactDao().delete(contact)
-        }
-    }
 
     // --- Event types ---
 
@@ -690,13 +671,9 @@ class CalOnyxRepository(private val db: CalOnyxDatabase) {
 
     fun observePartners(): Flow<List<Partner>> = db.partnerDao().observeAll()
 
-    suspend fun getPartners(): List<Partner> = db.partnerDao().getAll()
-
     suspend fun getPartner(uuid: String): Partner? = db.partnerDao().getByUuid(uuid)
 
     suspend fun savePartner(partner: Partner) = db.partnerDao().upsert(partner)
-
-    suspend fun deletePartner(partner: Partner) = db.partnerDao().delete(partner)
 
     suspend fun deletePartnerByUuid(uuid: String) {
         db.partnerDao().getByUuid(uuid)?.let { db.partnerDao().delete(it) }

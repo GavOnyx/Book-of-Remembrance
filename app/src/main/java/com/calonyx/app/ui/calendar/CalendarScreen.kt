@@ -1,3 +1,5 @@
+// The calendar day timeline: events laid out on the hours, with drag-to-move, pinch zoom, search, and multi-select.
+
 package com.calonyx.app.ui.calendar
 import androidx.compose.foundation.text.KeyboardOptions
 

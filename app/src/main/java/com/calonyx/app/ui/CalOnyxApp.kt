@@ -1,3 +1,5 @@
+// The app shell: the outer Scaffold and bottom navigation that wrap the five tabs.
+
 package com.calonyx.app.ui
 
 import androidx.activity.compose.BackHandler
@@ -20,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.calonyx.app.data.CalOnyxRepository
-import com.calonyx.app.data.Partner
 import com.calonyx.app.ui.calendar.CalendarScreen
 import com.calonyx.app.ui.calendar.CalendarViewModel
 import com.calonyx.app.ui.calendar.EventEditorScreen

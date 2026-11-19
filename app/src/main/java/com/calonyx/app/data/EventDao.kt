@@ -1,3 +1,5 @@
+// Database access for events: queries for the calendar, search, stats, and sync.
+
 package com.calonyx.app.data
 
 import androidx.room.Dao

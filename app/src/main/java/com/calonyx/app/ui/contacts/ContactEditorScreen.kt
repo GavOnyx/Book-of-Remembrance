@@ -1,3 +1,5 @@
+// The contact editor: name, phone, email, address, notes, and relationship.
+
 package com.calonyx.app.ui.contacts
 import androidx.compose.foundation.text.KeyboardOptions
 

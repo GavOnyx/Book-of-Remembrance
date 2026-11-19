@@ -1,3 +1,5 @@
+// The theme row: the selected theme, the saved Custom theme's colors, and the Light / Dark / Original presets.
+
 package com.calonyx.app.data
 
 import androidx.room.ColumnInfo

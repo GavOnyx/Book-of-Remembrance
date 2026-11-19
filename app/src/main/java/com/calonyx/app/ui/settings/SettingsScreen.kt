@@ -1,3 +1,5 @@
+// The Settings view: every setting, import/export, device sharing, and the documentation download.
+
 package com.calonyx.app.ui.settings
 
 import android.net.Uri
@@ -34,7 +36,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SnackbarHost
@@ -60,7 +61,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.calonyx.app.BuildConfig
-import com.calonyx.app.data.AppSettings
 import com.calonyx.app.data.CalOnyxRepository
 import com.calonyx.app.data.ContactSort
 import com.calonyx.app.data.Partner
@@ -118,16 +118,6 @@ internal val PRESET_COLORS = listOf(
     0xFFEC4899, 0xFFCF6679, 0xFFFFFFFF, 0xFFE0E0E0, 0xFF9E9E9E,
     0xFF616161, 0xFF1E1E1E, 0xFF121212, 0xFF000000
 ).map { it.toInt() }
-
-internal fun parseHex(input: String): Int? {
-    val clean = input.trim().removePrefix("#")
-    if (!clean.matches(Regex("[0-9a-fA-F]{6}"))) return null
-    return try {
-        (0xFF000000.toInt() or clean.toInt(16))
-    } catch (e: NumberFormatException) {
-        null
-    }
-}
 
 private fun toHex(argb: Int): String = "#%06X".format(argb and 0xFFFFFF)
 
@@ -299,6 +289,41 @@ fun SettingsScreen(
         ActivityResultContracts.CreateDocument("text/html"),
         onJournalSaved
     )
+    // v1.0.0: the full documentation is bundled as an asset and exported
+    // through the same save picker as the journal export — the file the
+    // user saves is the asset itself, read once at export time.
+    var pendingDocText by remember { mutableStateOf<String?>(null) }
+    val createDocLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("text/html")
+    ) { uri ->
+        val text = pendingDocText
+        pendingDocText = null
+        if (uri != null && text != null) {
+            scope.launch {
+                val ok = writeUri(uri, text)
+                snackbarHostState.showSnackbar(
+                    if (ok) "Documentation downloaded" else "Download failed"
+                )
+            }
+        }
+    }
+
+    fun startDocumentationExport() {
+        scope.launch {
+            pendingDocText = withContext(Dispatchers.IO) {
+                runCatching {
+                    context.assets.open("remembrance-documentation.html")
+                        .bufferedReader(Charsets.UTF_8).use { it.readText() }
+                }.getOrNull()
+            }
+            if (pendingDocText != null) {
+                createDocLauncher.launch("remembrance-documentation.html")
+            } else {
+                snackbarHostState.showSnackbar("Documentation not available")
+            }
+        }
+    }
+
     val openIcsLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.OpenDocument()
     ) { uri ->
@@ -784,6 +809,23 @@ fun SettingsScreen(
                     onClick = onShareClick,
                     modifier = Modifier.fillMaxWidth()
                 ) { Text("Share with another device…") }
+            }
+
+            // v1.0.0: the documentation download sits at the very bottom of
+            // Settings, below everything else.
+            item {
+                SectionHeader("Documentation")
+                Text(
+                    "The full documentation for the app, as a single HTML file " +
+                        "you can read any time, even away from the app.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                OutlinedButton(
+                    onClick = { startDocumentationExport() },
+                    modifier = Modifier.fillMaxWidth()
+                ) { Text("Download the full documentation") }
             }
 
             item { Spacer(Modifier.height(24.dp)) }

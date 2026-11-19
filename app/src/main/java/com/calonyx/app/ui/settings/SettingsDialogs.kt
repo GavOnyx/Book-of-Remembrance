@@ -1,3 +1,5 @@
+// The dialogs for editing event types and relationship tags.
+
 package com.calonyx.app.ui.settings
 
 import androidx.compose.foundation.background

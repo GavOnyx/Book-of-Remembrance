@@ -1,3 +1,5 @@
+// The Home view: month overview, stats donut, and unmarked events.
+
 package com.calonyx.app.ui.home
 
 import androidx.compose.foundation.Canvas

@@ -1,3 +1,5 @@
+// The bottom-navigation icons, hand-drawn with Canvas — no icon library is used.
+
 package com.calonyx.app.ui.components
 
 import androidx.compose.foundation.Canvas

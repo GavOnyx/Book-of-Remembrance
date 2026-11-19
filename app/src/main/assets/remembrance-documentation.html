@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Book of Remembrance — Documentation</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            background: #FCF8F7;
+            color: #1C1817;
+            line-height: 1.55;
+            margin: 0;
+            padding: 24px 16px 48px;
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h1 {
+            font-size: 1.6em;
+            color: #A7004E;
+            margin-bottom: 0.2em;
+        }
+
+        .version {
+            color: #6b625f;
+            font-size: 0.95em;
+            margin-top: 0;
+        }
+
+        blockquote {
+            text-align: center;
+            font-style: italic;
+            margin: 1.5em 0;
+            padding: 0 1em;
+            color: #3d3836;
+        }
+
+        blockquote cite {
+            display: block;
+            font-style: normal;
+            margin-top: 0.4em;
+        }
+
+        details {
+            background: #F1EDEC;
+            border: 1px solid #e0d9d6;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin: 10px 0;
+        }
+
+        details details {
+            background: #FCF8F7;
+            margin: 8px 0;
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.05em;
+            color: #A7004E;
+        }
+
+        summary:hover {
+            text-decoration: underline;
+        }
+
+        ul {
+            margin: 0.4em 0 0.6em;
+            padding-left: 1.3em;
+        }
+
+        li {
+            margin: 0.3em 0;
+        }
+
+        p {
+            margin: 0.5em 0;
+        }
+
+        code {
+            background: #e8e2df;
+            border-radius: 4px;
+            padding: 0 4px;
+            font-size: 0.92em;
+        }
+
+        .note {
+            color: #6b625f;
+            font-size: 0.95em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Book of Remembrance — Documentation</h1>
+    <p class="version">For Remembrance 1.0.0</p>
+
+    <blockquote>
+        “For a Book of Remembrance we have written among us, according to the pattern given by the finger of God”
+        <cite>— Moses 6:46</cite>
+    </blockquote>
+
+    <p>Welcome to the Book of Remembrance app (also called Remembrance). This was designed with the Area Book / Preach My Gospel app in mind as developed by the LDS church (contacts are integrated with events, and events can be marked as “happened”, etc). This is not just a calendar app — it is a way to record and plan your life.</p>
+
+    <p>Tap a section below to open it. Everything in the app is covered here, organized by view.</p>
+
+    <details>
+        <summary>Home view</summary>
+        <p>The Home view is the first tab. It shows how your time is going, at a glance.</p>
+        <ul>
+            <li><strong>Month overview.</strong> A calendar of the current month. Each day shows how much of that day is scheduled or planned, as a percentage of your day fill window (see Settings). The percentage is capped at 100%. Use the ‹ and › arrows to move between months, or the <strong>This month</strong> button to jump back to the current month.</li>
+            <li><strong>Stats.</strong> A donut chart of how your time was spent, over the past days plus today (how many days is set in Settings → Stats). The <strong>Types / Contacts</strong> toggle switches between two views:
+                <ul>
+                    <li><em>Types</em> — time per event type, as a percentage of the fill-window time and in hours, for example “19% | 23.4h”.</li>
+                    <li><em>Contacts</em> — who you have spent time with, and how many events each person appears in.</li>
+                </ul>
+            </li>
+            <li><strong>Unmarked events.</strong> A list of events from the recent past that still have no status. Tap one to open it and mark it happened or didn’t happen to remove it from this list.</li>
+        </ul>
+    </details>
+
+    <details>
+        <summary>Events view (Calendar)</summary>
+        <p>The Events view is the day timeline: a vertical cascade of the day’s hours with your events laid out on it.</p>
+        <ul>
+            <li><strong>Adding an event.</strong> Tap on a blank space in the timeline which sets the start time at about where you pressed, or press the + button which sets the start time as the current time.</li>
+            <li><strong>Viewing and editing.</strong> Tap an event to open it in the event editor (see below).</li>
+            <li><strong>Overlapping events.</strong> Events that overlap in time shrink side by side so you can see them all.</li>
+            <li><strong>Zoom.</strong> Pinch the timeline to make the hours taller or shorter.</li>
+            <li><strong>Search.</strong> The search box at the top filters events by title, type, contact, or details.</li>
+            <li><strong>Drag and Drop.</strong> Press and hold an event and then, without releasing, begin dragging it up and down to move an event.</li>
+            <li><strong>Multi-select.</strong> Press and hold an event (without dragging) to select it, then tap more events. With events selected you can duplicate them, delete them, change their type, or change their status all at once. Tap the × or press Back to leave selection mode.</li>
+            <li><strong>Calendar / Journal toggle.</strong> The button at the top left switches between the timeline and the Journal view.</li>
+            <li><strong>Which hours are shown</strong> is set in Settings → Calendar hours.</li>
+        </ul>
+
+        <details>
+            <summary>The event editor</summary>
+            <p>The editor opens when you add an event or tap one. Its fields:</p>
+            <ul>
+                <li><strong>Title.</strong> If you leave it blank, the event takes its title from its type, or from the people linked to it. An event always ends up with a title one way or another.</li>
+                <li><strong>Type.</strong> Pick an event type (Visit, Appointment, Errand, etc.). Picking a type before setting a time automatically changes the event duration. The type also sets the event’s color. Both are changeable in Settings → Event types.</li>
+                <li><strong>Starts / Ends.</strong> Tap to pick the start and end date and time.</li>
+                <li><strong>Repeat.</strong> An event can repeat: None, Daily, Weekly, Monthly, or Yearly. A repeating event can end Never, After a number of times, or On a date.</li>
+                <li><strong>Status.</strong> Unmarked, Happened, or Didn’t happen. On the timeline and in lists the status shows as a shape as well as a color: a gray circle for unmarked, a green checkmark for happened, a red X for didn’t happen.</li>
+                <li><strong>Location (optional).</strong> This value can be whatever you like. There is no map connectivity yet.</li>
+                <li><strong>Details / report (optional).</strong> The written record of what happened — these details are used in the journal export (see Settings → Import / Export → Export journal).</li>
+                <li><strong>People.</strong> Link the contacts who were part of the event. The Link people dialog lets you search your contacts and sort them while you pick.</li>
+                <li><strong>Save / Delete.</strong> Save keeps the event; Delete asks first. Deleting a repeating event asks whether to delete just this occurrence or the whole series.</li>
+            </ul>
+        </details>
+    </details>
+
+    <details>
+        <summary>Journal view</summary>
+        <p>In the Journal view, a greater emphasis is placed on the details of events. Everything is saved as you type — there is no save button. Use the Calendar view to plan your day and the Journal view to write out the details.</p>
+        <ul>
+            <li>Events are shown as cards, grouped by day, earliest first.</li>
+            <li>The large colored dot next to each event title is a drop-down to select the status (unmarked, happened, or didn’t happen).</li>
+            <li>Tap an event title to edit it. The drop-down to the right of the title selects the event type. The start and end times are also selectable for editing.</li>
+            <li>Tap <strong>Add contacts</strong> or the <strong>with [contact name]</strong> text to update the associated contacts.</li>
+            <li>Tap <strong>Add details…</strong> to write the event’s report. Only events with a description appear in a journal export.</li>
+            <li>Press the calendar button in the top left to go back to the calendar view.</li>
+        </ul>
+    </details>
+
+    <details>
+        <summary>Contacts view</summary>
+        <p>The Contacts view lists everyone in your book of remembrance, with their events linked to them.</p>
+        <ul>
+            <li><strong>Sorting.</strong> The sort control offers four orders:
+                <ul>
+                    <li><em>A–Z</em> — alphabetically by name.</li>
+                    <li><em>Recent</em> — by the most recently linked event, most recent first. Contacts with no events come last.</li>
+                    <li><em>Frequent</em> — by how many events link to the contact, most first.</li>
+                    <li><em>Relationship</em> — by relationship tag, in the order the tags are listed in Settings: family and friends first, then co-workers, and so on.</li>
+                </ul>
+                The sort you pick here becomes the default sort in Settings.
+            </li>
+            <li><strong>Sync button.</strong> The Sync button at the top opens a dialog with two directions:
+                <ul>
+                    <li><em>Import from phone</em> — brings your phone’s contacts into the app. Contacts already in the app are skipped, never duplicated.</li>
+                    <li><em>Export to phone</em> — adds contacts made in the app to your phone. It only adds contacts that aren’t on the phone yet; if a phone contact matches by name and phone number, it is linked instead of duplicated. Export does not update contacts that are already on the phone.</li>
+                </ul>
+                The app asks for permission to read your contacts only when you import, and to write them only when you export.
+            </li>
+            <li><strong>Multi-select.</strong> Press and hold a contact to select it, then tap more. With contacts selected you can merge them into one contact or change their relationship tag in bulk.</li>
+            <li><strong>Opening a contact.</strong> Tap any contact to view its details.</li>
+        </ul>
+
+        <details>
+            <summary>Contact details view</summary>
+            <ul>
+                <li>Shows the contact’s name, phone, email, address, notes, and relationship tag. The <strong>Edit</strong> button allows you to update a contact's details/info.</li>
+                <li>Below the details is a list of all the events associated with the contact, newest first, grouped under date headings. Each event shows its status shape (green checkmark, red X, or gray circle).</li>
+                <li>Tap an event to open it in the event editor.</li>
+            </ul>
+
+            <details>
+                <summary>Editing a contact</summary>
+                <ul>
+                    <li><strong>First name</strong> and <strong>Last name</strong>. A name is required; everything else is optional.</li>
+                    <li><strong>Phone (optional), Email (optional), Address (optional), Notes (optional).</strong></li>
+                    <li><strong>Relationship.</strong> None, or one of your relationship tags (family, friend, co-worker, peer, stranger, or one you added). The relationship decides where the contact sorts in Relationship order.</li>
+                </ul>
+            </details>
+        </details>
+    </details>
+
+    <details>
+        <summary>Settings view</summary>
+        <p>Settings holds everything that shapes how the app looks and behaves. At the top is the <strong>Help</strong> button, which opens the in-app help page, and, if enabled, the <strong>Sync with partner</strong> button opens a partner sync dialog (see Device sharing below).</p>
+
+        <details>
+            <summary>Calendar hours</summary>
+            <p><strong>Day starts</strong> and <strong>Day ends</strong> set the hours shown on the calendar day timeline. By default the whole day is shown, midnight to midnight. Narrowing the range hides the hours you never schedule in.</p>
+        </details>
+
+        <details>
+            <summary>Day fill window</summary>
+            <p><strong>Window starts</strong> and <strong>Window ends</strong> set the hours the Home month view measures each day against. For example, you may not want to worry about what you fill your time with before 6 AM or after 10 PM, because it is almost always sleep — or most of your life may already be planned for and all you want to worry about is how you used your time in the afternoon. By default the window is 6 AM to 10 PM.</p>
+        </details>
+
+        <details>
+            <summary>Stats</summary>
+            <p><strong>Past days</strong> sets how many past days, plus today, the Home stats section looks back over. The default is 7 days; you can set 0 to 30.</p>
+        </details>
+
+        <details>
+            <summary>Text size</summary>
+            <p>A slider that scales the text throughout the app, from half size to three times size. A sample sentence shows the current size as you adjust it.</p>
+        </details>
+
+        <details>
+            <summary>Appearance</summary>
+            <p>The <strong>Theme</strong> drop-down offers Light, Dark, Original, and Custom. The Light theme is selected on a fresh install. Choosing a theme applies it at once — there is no save step.</p>
+            <ul>
+                <li><strong>Light</strong> — a light background with a dark red accent. <strong>Dark</strong> — a near-black background with the same dark red accent. <strong>Original</strong> — a dark theme with a purple accent.</li>
+                <li>The theme sets four appearance colors (Background, Foreground, Accent, Font) and the color of each built-in event type.</li>
+                <li><strong>Custom theme.</strong> Tap any color to change it and the selection flips to Custom, with a <strong>Save custom theme</strong> button appearing near the drop-down. Whatever the colors are set to when you press Save becomes your saved Custom theme. If you switch themes or leave Settings without saving, the unsaved edits are discarded and the previous theme comes back.</li>
+                <li><strong>Event types you added yourself</strong> keep their color in every theme — they are not recolored by theme changes — and are marked “Custom” in the event types list.</li>
+                <li><strong>Launcher icon.</strong> The app’s launcher icon follows the theme: a light, dark, or original icon to match. If your theme is a custom one, the icon used is the one closest to it — a light background gives the light icon; a dark background gives the dark or original icon, whichever accent color yours is closer to.</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>Event types</summary>
+            <p>The built-in types are Visit, Call, Text, Date, Appointment, Note, Work, Meal, Travel, and Errand. Tap a type to rename it, change its color, or change its <strong>default duration</strong> in minutes (60 minutes unless you changed it) — the length a new event of that type starts with.</p>
+            <ul>
+                <li>Add your own type with the add button. A brand-new type starts with the current theme’s accent color.</li>
+                <li>Deleting a type does not delete events with that type. Instead those events lose a type altogether (i.e. the None type). The app tells you first whether any events use it.</li>
+                <li>Changing a built-in type’s color while a preset theme is selected makes a temporary Custom theme (see Appearance) — the change is only kept if you save the custom theme. Name and duration changes are kept at once and do not affect the theme.</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>Relationship tags</summary>
+            <p>The built-in tags are family, friend, co-worker, peer, and stranger. You can add your own tags. The order the tags are listed here is the order Relationship sorting uses in the Contacts view. Deleting a tag leaves the contacts that had it untagged.</p>
+        </details>
+
+        <details>
+            <summary>Contacts (default sort)</summary>
+            <p><strong>Default sort</strong> sets the order contacts open in: A–Z, Recent, Frequent, or Relationship. Changing the sort in the Contacts view updates this setting too — they are the same choice.</p>
+        </details>
+
+        <details>
+            <summary>Device sharing</summary>
+            <p>Share events and contacts with another Remembrance user, straight from one device to the other.</p>
+            <ul>
+                <li><strong>Share with another device…</strong> — a single transfer: pick the events and contacts to send, and the other device receives them. Good for sharing with a peer or companion once.</li>
+                <li><strong>Sync with partner</strong> — remember the other device as a sync partner, for a spouse or someone whose life is deeply intertwined with yours. After that, each sync sends only what has changed since the last one.</li>
+                <li>Both devices must be on the same Wi-Fi network, and the other person must also be viewing the sharing screen. <strong>Nothing syncs in the background</strong> — sharing only happens while you are on this screen and tell it to.</li>
+                <li>If the same event was changed on both devices, the most recent change wins.</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>Import / Export</summary>
+            <ul>
+                <li><strong>Export events…</strong> — exports your events as an .ics file (a standard calendar format any calendar app can read), with the Book of Remembrance details preserved. By default it also exports all contacts linked to any of the events, as a .vcf file. You can filter by date range, by event type, and by contact, and choose whether to include contacts.</li>
+                <li><strong>Export journal…</strong> — exports your events as a human-readable journal, either as Text (.txt) or HTML (.html). Only events with a description are included, so I encourage accurate and detailed record keeping for any event you wish to remember. This export mode is perfect for adding to your FamilySearch.org account (unaffiliated) or to replace a written journal. The date range defaults to the previous month. Each entry reads as <code>Title: details — Type with Contacts.</code> (the title is left out when it would only repeat the type or the contacts’ names).</li>
+                <li><strong>Import events (.ics)…</strong> — brings events in from a calendar file. Events already in the app are skipped. Re-importing a file you exported earlier also restores any contact links that are missing — the confirmation tells you how many links were restored.</li>
+                <li><strong>Import contacts (.vcf)…</strong> — brings contacts in from a contacts file. Contacts already in the app are skipped.</li>
+                <li><strong>Auto-create contacts for unknown attendees.</strong> An attendee is a contact linked to an event. When on (the default), importing events creates a contact for any attendee who doesn’t appear in your contact list. When off, those links are lost — so import your contacts before importing events, or leave this on.</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>Documentation</summary>
+            <p>At the very bottom of Settings is a button that says <strong>Download the full documentation</strong>. It saves this documentation file to your phone, so you can read it any time, even away from the app.</p>
+        </details>
+    </details>
+
+    <details>
+        <summary>Privacy</summary>
+        <p>Everything stays on your device. There is no account, no cloud, and no tracking.</p>
+        <ul>
+            <li>Your events, contacts, and settings live in a database on your phone, and nowhere else.</li>
+            <li>The app only uses the network to send or receive data to another Remembrance user, over your local Wi-Fi, and only when you explicitly tell it to (sharing or partner sync).</li>
+            <li>Two honest notes: if Android’s device backup is switched on, the system itself may copy the app’s data into your device backup. And the internet permission is a blanket Android permission that can’t be limited to local Wi-Fi — so the fact that your data stays local rests on the app’s code, which is public for anyone to check.</li>
+        </ul>
+    </details>
+
+    <p class="note">Book of Remembrance, version 1.0.0. Questions or corrections to this documentation can be raised with the app’s author. Visit <a href="https://github.com/GavOnyx/Book-of-Remembrance">the Book of Remembrance GitHub repo</a> to do so.</p>
+
+</body>
+
+</html>

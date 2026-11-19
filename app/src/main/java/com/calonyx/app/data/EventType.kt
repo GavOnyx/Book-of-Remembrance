@@ -1,3 +1,5 @@
+// An event type: name, color, and default duration. User-added types keep their color across themes.
+
 package com.calonyx.app.data
 
 import androidx.room.Entity

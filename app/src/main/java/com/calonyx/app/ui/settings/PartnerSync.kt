@@ -1,3 +1,5 @@
+// The partner-sync engine: deltas, tombstones, and last-writer-wins conflict resolution.
+
 package com.calonyx.app.ui.settings
 
 import android.content.Context
@@ -805,10 +807,6 @@ class PartnerNsd(
 /** Repository one-shot for event types (delta building needs the map). */
 suspend fun CalOnyxRepository.observeEventTypesForSync() =
     observeEventTypes().first()
-
-/** Display name sanitized for the wire (single line, bounded). */
-fun sanitizeDisplayName(raw: String): String =
-    raw.replace('\n', ' ').replace('\r', ' ').trim().take(64).ifBlank { "Unknown device" }
 
 /** Default friendly name for pairing: the device model. */
 fun defaultDeviceName(): String = try {

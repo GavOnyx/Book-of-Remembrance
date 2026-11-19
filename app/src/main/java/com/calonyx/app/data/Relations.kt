@@ -1,3 +1,5 @@
+// Room @Relation wrappers: a contact with its events, an event with its contacts.
+
 package com.calonyx.app.data
 
 import androidx.room.Embedded

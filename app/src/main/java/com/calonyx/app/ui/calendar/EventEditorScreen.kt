@@ -1,3 +1,5 @@
+// The event editor: title, type, times, repeat, status, location, details, and people.
+
 package com.calonyx.app.ui.calendar
 import androidx.compose.foundation.text.KeyboardOptions
 
@@ -38,7 +40,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
@@ -95,7 +96,6 @@ import com.calonyx.app.ui.formatDateTime
 import com.calonyx.app.ui.formatTime
 import com.calonyx.app.ui.toLocalDate
 import com.calonyx.app.ui.toLocalDateTime
-import com.calonyx.app.ui.toMillis
 import com.calonyx.app.ui.toMillisAt
 import com.calonyx.app.ui.toUtcPickerMillis
 import com.calonyx.app.ui.utcPickerMillisToLocalDate

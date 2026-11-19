@@ -1,3 +1,5 @@
+// Applies the saved theme to the whole app, and switches the launcher icon when the theme changes.
+
 package com.calonyx.app.ui.theme
 
 import android.app.Activity

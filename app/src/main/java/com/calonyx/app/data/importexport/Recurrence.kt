@@ -1,3 +1,5 @@
+// Recurrence rules: daily / weekly / monthly / yearly, and when a series ends.
+
 package com.calonyx.app.data.importexport
 
 import java.time.Instant

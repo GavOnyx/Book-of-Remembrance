@@ -1,3 +1,5 @@
+// The three event statuses: unmarked, happened, and didn't happen.
+
 package com.calonyx.app.data
 
 /**

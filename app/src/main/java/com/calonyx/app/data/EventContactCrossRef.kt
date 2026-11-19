@@ -1,3 +1,5 @@
+// The link between an event and a contact, stamped with when the link was made (drives the Recent sort).
+
 package com.calonyx.app.data
 
 import androidx.room.Entity

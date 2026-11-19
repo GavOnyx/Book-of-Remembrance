@@ -1,3 +1,5 @@
+// iCalendar line folding and unfolding: long lines wrap at 75 characters, and unfold back when read.
+
 package com.calonyx.app.data.importexport
 
 /** A single unfolded `NAME;PARAM=VAL:VALUE` content line. */

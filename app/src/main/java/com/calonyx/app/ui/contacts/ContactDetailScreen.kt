@@ -1,3 +1,5 @@
+// A contact's details, with its events listed newest first under date headers.
+
 package com.calonyx.app.ui.contacts
 
 import androidx.compose.foundation.layout.Arrangement

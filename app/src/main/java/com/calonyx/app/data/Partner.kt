@@ -1,3 +1,5 @@
+// A remembered sync partner: the other device's identity, name, and where the last sync stopped.
+
 package com.calonyx.app.data
 
 import androidx.room.Entity

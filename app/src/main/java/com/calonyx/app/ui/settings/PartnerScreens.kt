@@ -1,3 +1,5 @@
+// The partner-sync screens: choosing a partner and watching a sync run.
+
 package com.calonyx.app.ui.settings
 import androidx.compose.foundation.text.KeyboardOptions
 

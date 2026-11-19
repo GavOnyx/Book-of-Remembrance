@@ -1,3 +1,5 @@
+// The app's settings, stored as a single database row: hours, fill window, sort, text size, stats, sync identity.
+
 package com.calonyx.app.data
 
 import androidx.room.Entity
@@ -18,17 +20,17 @@ enum class ContactSort(val label: String) {
 
 /**
  * User-configurable app behavior. Stored as a singleton row (id = 1).
- * There is no settings UI yet — these values are seeded with defaults and
- * every screen reads them from [CalOnyxRepository.observeAppSettings], so a
- * future settings screen only needs to write new values here.
+ * Every screen reads it from [CalOnyxRepository.observeAppSettings], and
+ * the Settings view writes it — add a field here and a row there and the
+ * setting exists.
  *
  * Hours are whole hours on a 24h clock: [calendarStartHour, calendarEndHour)
  * is the visible range of the calendar day timeline, and
  * [fillWindowStartHour, fillWindowEndHour) is the window the Home month
  * fill-% view measures each day against.
  *
- * [textScale] multiplies body text sizes on detail screens; the settings
- * screen (milestone 6) will let the user adjust it.
+ * [textScale] multiplies body text sizes app-wide (applied to the theme
+ * Typography); the Settings view lets the user adjust it.
  */
 @Entity(tableName = "app_settings")
 data class AppSettings(
